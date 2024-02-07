@@ -16,3 +16,5 @@
 ## Next Version: Version 3
 - Add 2nd obstaacle
 - Add collectibles (e.g.: cheese)
+- Improve jump-fall-land animations
+- Improve game over animation
