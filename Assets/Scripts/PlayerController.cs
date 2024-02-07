@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-using static UnityEngine.ParticleSystem;
-
+using System.Threading;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody playerRigidBody;
@@ -12,6 +11,8 @@ public class PlayerController : MonoBehaviour
     bool canJump;
     public GameManagerScript gameManager;
     public Animator playerAnimator;
+    public AudioSource gameOverSound;
+    public AudioSource playerJumpSound;
 
     private void Awake()
     {
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+        gameOverSound = gameManager.GetComponent<AudioSource>();
+        playerJumpSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,60 +32,67 @@ public class PlayerController : MonoBehaviour
     {
         AnimatePlayer();
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && canJump && !IsMouseOverUI())
+       /* if (Input.GetKeyDown(KeyCode.UpArrow) && canJump)
         {
             // jump player
             playerRigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+            playerJumpSound.Play();
+        }*/
 
         // Mobile input for jump
-        foreach (Touch touch in Input.touches)
+        Touch touchInput = Input.GetTouch(0);
+        if (touchInput.phase == TouchPhase.Began && canJump)
         {
-            if (touch.phase == TouchPhase.Began && canJump)
-            {
-                // Construct a ray from the current touch coordinates
-                playerRigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            }
+            playerRigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            playerJumpSound.Play();
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) && canJump && !IsMouseOverUI())
+        /*foreach (Touch touch in Input.touches)
+        {
+            if (touch.phase == TouchPhase.Began && canJump && gameManager.isGameOn)
+            {
+                playerRigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                playerJumpSound.Play();
+            }
+        }*/
+
+        /*if (Input.GetKeyDown(KeyCode.RightArrow) && canJump && !IsMouseOverUI())
         {
             // dodge player to right (animation)
             playerAnimator.SetTrigger("dodged");
 
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Bridge")
-        {
-            Debug.Log("Bridge Enter");
-            canJump = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Bridge")
-        {
-            Debug.Log("Bridge Exit");
-            canJump = false;
-        }
+        }*/
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Obstacle1" || other.gameObject.tag == "Obstacle2")
+        if (other.gameObject.tag == "GroundCollider")
         {
+            canJump = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "GroundCollider")
+        {
+            canJump = false;
+        }
+    }
+    private IEnumerator OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Obstacle1" || collision.gameObject.tag == "Obstacle2")
+        {
+            gameOverSound.Play();
+            yield return new WaitForSeconds(1f);
             SceneManager.LoadScene("Gameplay");
         }
     }
 
-    private bool IsMouseOverUI()
+   /* private bool IsMouseOverUI()
     {
         return EventSystem.current.IsPointerOverGameObject();
-    }
+    }*/
 
     private void AnimatePlayer()
     {

@@ -8,6 +8,7 @@ TagManager:
   - Obstacle1
   - Obstacle2
   - Obstacle3
+  - GroundCollider
   layers:
   - Default
   - TransparentFX

@@ -6,16 +6,20 @@ using TMPro;
 
 public class GameManagerScript : MonoBehaviour
 {
-    public GameObject obstacle1, obstacle2, obstacle3, playButton;
+    public GameObject obstacle1, obstacle2, obstacle3, playButton, exitButton;
     private GameObject[] obstacles;
     public TMP_Text scorePanel;
     public Transform spawnPoint;
+    public AudioSource gameBgSound;
     public bool isGameOn = false;
     public int playerScore = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameBgSound = GameObject.Find("Canvas").GetComponent<AudioSource>();
+        gameBgSound.Play();
+
         obstacles = new GameObject[3];
 
         // change from all 1 to 1-2-3 as new obstacles are added
@@ -51,6 +55,7 @@ public class GameManagerScript : MonoBehaviour
     {
         StartCoroutine("SpawnObstacles");
         playButton.SetActive(false);
+        exitButton.SetActive(false);
         isGameOn = true;
     }
 
