@@ -18,3 +18,4 @@
 - Add collectibles (e.g.: cheese)
 - Improve jump-fall-land animations
 - Improve game over animation
+- Improve score panel
