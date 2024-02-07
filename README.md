@@ -8,7 +8,11 @@
 - Score panel
 - Play and exit buttons
 
-## Upcoming Version: Version 2
+## Current Version: Version 2
 - Improve assets
 - Improve UI elements
 - Add sound effects and music
+
+## Next Version: Version 3
+- Add 2nd obstaacle
+- Add collectibles (e.g.: cheese)
