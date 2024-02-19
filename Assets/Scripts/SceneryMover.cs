@@ -16,10 +16,16 @@ public class SceneryMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameManager.playerHitObstacle)
+        {
+            StopMovingScenery();
+        }
+
         if (gameManager.isGameOn)
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
+        
 
         if (transform.position.z < -60)
         {
@@ -30,5 +36,13 @@ public class SceneryMover : MonoBehaviour
     void OnBecameInvisible()
     {
         Destroy(gameObject);
+    }
+
+    private void StopMovingScenery()
+    {
+        if (speed != 0)
+        {
+            speed = speed + (Time.deltaTime * -speed);
+        }
     }
 }

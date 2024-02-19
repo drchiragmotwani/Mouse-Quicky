@@ -16,10 +16,16 @@ public class GroundMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameManager.playerHitObstacle)
+        {
+            StopMovingGround();
+        }
+
         if (gameManager.isGameOn)
         {
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
+        
 
         if (transform.position.z < -60)
         {
@@ -30,5 +36,13 @@ public class GroundMover : MonoBehaviour
     void OnBecameInvisible()
     {
         Destroy(gameObject);
+    }
+
+    private void StopMovingGround()
+    {
+        if (speed != 0)
+        {
+            speed = speed + (Time.deltaTime * -speed);
+        }
     }
 }

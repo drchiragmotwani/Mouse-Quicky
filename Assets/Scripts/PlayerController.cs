@@ -8,11 +8,11 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody playerRigidBody;
     public float jumpForce;
-    bool canJump;
+    bool canJump, isFirstJump = true;
     public GameManagerScript gameManager;
     public Animator playerAnimator;
     public AudioSource gameOverSound;
-    public AudioSource playerJumpSound;
+    public AudioSource[] playerJumpSounds;
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
         gameOverSound = gameManager.GetComponent<AudioSource>();
-        playerJumpSound = GetComponent<AudioSource>();
+        playerJumpSounds = GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
@@ -44,7 +44,8 @@ public class PlayerController : MonoBehaviour
         if (touchInput.phase == TouchPhase.Began && canJump)
         {
             playerRigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            playerJumpSound.Play();
+            playerAnimator.SetTrigger("jumped");
+            playerJumpSounds[1].Play();
         }
 
         /*foreach (Touch touch in Input.touches)
@@ -69,6 +70,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "GroundCollider")
         {
             canJump = true;
+            playerAnimator.ResetTrigger("jumped");
         }
     }
 
@@ -83,8 +85,10 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Obstacle1" || collision.gameObject.tag == "Obstacle2")
         {
+            gameManager.StopMovingAssets();
+            playerAnimator.SetTrigger("hitObstacle");
             gameOverSound.Play();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(3f);
             SceneManager.LoadScene("Gameplay");
         }
     }

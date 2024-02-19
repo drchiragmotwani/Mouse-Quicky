@@ -11,7 +11,8 @@ public class GameManagerScript : MonoBehaviour
     public TMP_Text scorePanel;
     public Transform spawnPoint;
     public AudioSource gameBgSound;
-    public bool isGameOn = false;
+    public PlayerController playerController;
+    public bool isGameOn = false, playerHitObstacle = false;
     public int playerScore = 0;
 
     // Start is called before the first frame update
@@ -57,6 +58,7 @@ public class GameManagerScript : MonoBehaviour
         playButton.SetActive(false);
         exitButton.SetActive(false);
         isGameOn = true;
+        playerController.playerJumpSounds[0].Play();
     }
 
     public void AddScore(int score)
@@ -68,5 +70,10 @@ public class GameManagerScript : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void StopMovingAssets()
+    {
+        playerHitObstacle = true;
     }
 }
