@@ -2,23 +2,26 @@
  Mouse running and jumping over the obstacles
 
 ## Version 1
-- Mouse character (from mixamo): idle dance animation and running animation  
-- Basic blocks as obstacles
-- A long bridge (using simple block)
-- Score panel
-- Play and exit buttons
+- Mouse character (from mixamo): idle dance animation and running animation ✔  
+- Basic blocks as obstacles ✔  
+- A long bridge (using simple block) ✔  
+- Score panel ✔  
+- Play and exit buttons ✔  
 
-## Current Version: Version 2
-- Improve assets
-- Improve UI elements
-- Add sound effects and music
+## Version 2
+- Improve assets ✔  
+- Improve UI elements ✔  
+- Add sound effects and music ✔  
 
-## Next Version: Version 3
-- Add 2nd obstaacle
+## Current Version: Version 3
+- Improve jump animations ✔
+- Improve game over animation (falling on floor, slowing down of obstacles, ground and scenery) ✔
+- Add first jump sound ✔  
+- Improve score panel ✔  
+
+## Next Version: Version 4
+- Add 2nd obstacle
 - Add collectibles (e.g.: cheese)
-- Improve jump-fall-land animations
-- Improve game over animation
-- Improve score panel
 
 ## Assets
 - Walking path image texture: Image by Tom from Pixabay
@@ -29,3 +32,4 @@
 - Background Music: Music by Sergei Chetvertnykh from Pixabay
 - Game Over Sound: Sound Effect by UNIVERSFIELD from Pixabay
 - Jump Sound: Sound Effect by floraphonic from Pixabay
+- First Jump Sound : Sound Effect by floraphonic from Pixabay
